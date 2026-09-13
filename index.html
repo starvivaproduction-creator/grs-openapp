@@ -101,6 +101,8 @@
             border-radius: 12px;
             font-size: 18px;
             font-weight: bold;
+            border: none;
+            cursor: pointer;
             transition: 0.2s;
         }
 
@@ -109,10 +111,83 @@
             transform: translateY(-2px);
         }
 
+        .download:disabled {
+            opacity: 0.65;
+            cursor: not-allowed;
+            transform: none;
+        }
+
         .info {
             margin-top: 25px;
             color: #667085;
             font-size: 14px;
+        }
+
+        /* ==============================
+           DOWNLOAD PROGRESS
+        ============================== */
+
+        .download-box {
+            display: none;
+            max-width: 600px;
+            margin: 30px auto 0;
+            padding: 22px;
+            background: #f8fafc;
+            border: 1px solid #e5e9f0;
+            border-radius: 16px;
+            text-align: left;
+        }
+
+        .download-title {
+            font-size: 17px;
+            font-weight: bold;
+            margin-bottom: 14px;
+        }
+
+        .progress-container {
+            width: 100%;
+            height: 18px;
+            background: #e1e7ef;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            width: 0%;
+            height: 100%;
+            background: #0b74ff;
+            border-radius: 20px;
+            transition: width 0.15s ease;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+            font-size: 14px;
+            color: #667085;
+        }
+
+        .progress-percent {
+            font-weight: bold;
+            color: #172033;
+        }
+
+        .download-status {
+            margin-top: 12px;
+            font-size: 14px;
+            color: #667085;
+        }
+
+        .complete {
+            color: #16803c;
+            font-weight: bold;
+        }
+
+        .error {
+            color: #c62828;
+            font-weight: bold;
         }
 
         .features {
@@ -147,6 +222,7 @@
         }
 
         @media (max-width: 650px) {
+
             h1 {
                 font-size: 29px;
             }
@@ -158,6 +234,19 @@
             main {
                 padding: 25px 15px;
             }
+
+            .hero {
+                padding: 35px 18px;
+            }
+
+            .download {
+                width: 100%;
+                padding: 17px 20px;
+            }
+
+            .progress-info {
+                font-size: 13px;
+            }
         }
     </style>
 </head>
@@ -166,10 +255,18 @@
 
 <header>
     <div class="header-inner">
-        <img src="logo.png" class="logo" alt="GRS OpenApps Logo">
-        <div class="brand">GRS OpenApps</div>
+
+        <img src="logo.png"
+             class="logo"
+             alt="GRS OpenApps Logo">
+
+        <div class="brand">
+            GRS OpenApps
+        </div>
+
     </div>
 </header>
+
 
 <main>
 
@@ -179,20 +276,84 @@
              class="app-logo"
              alt="GRS OpenApps">
 
-        <h1>GRS OpenApps</h1>
+        <h1>
+            GRS OpenApps
+        </h1>
 
         <p class="subtitle">
             Download the official GRS OpenApps Android application.
             Get the latest version and install it directly on your device.
         </p>
 
-        <!--
-        REPLACE THIS LINK WITH YOUR REAL APK LINK
-        -->
-        <a class="download"
-           href="https://github.com/starvivaproduction-creator/grs-openapp/releases/download/v1.0.0/GRS.OpenApps.apk">
-           DOWNLOAD APK
-        </a>
+
+        <!-- ==============================
+             DOWNLOAD BUTTON
+        ============================== -->
+
+        <button
+            id="downloadButton"
+            class="download"
+            type="button">
+
+            DOWNLOAD APK
+
+        </button>
+
+
+        <!-- ==============================
+             DOWNLOAD PROGRESS
+        ============================== -->
+
+        <div
+            id="downloadBox"
+            class="download-box">
+
+            <div
+                id="downloadTitle"
+                class="download-title">
+
+                Downloading GRS OpenApps...
+
+            </div>
+
+
+            <div class="progress-container">
+
+                <div
+                    id="progressBar"
+                    class="progress-bar">
+                </div>
+
+            </div>
+
+
+            <div class="progress-info">
+
+                <span id="downloadSize">
+                    0 MB / 0 MB
+                </span>
+
+                <span
+                    id="progressPercent"
+                    class="progress-percent">
+
+                    0%
+
+                </span>
+
+            </div>
+
+
+            <div
+                id="downloadStatus"
+                class="download-status">
+
+                Preparing download...
+
+            </div>
+
+        </div>
+
 
         <div class="info">
             Android App • Official Download
@@ -200,30 +361,398 @@
 
     </section>
 
+
     <section class="features">
 
         <div class="feature">
-            <h3>📱 Android</h3>
-            <p>Designed for Android devices.</p>
+
+            <h3>
+                📱 Android
+            </h3>
+
+            <p>
+                Designed for Android devices.
+            </p>
+
         </div>
 
-        <div class="feature">
-            <h3>⚡ Easy Download</h3>
-            <p>Download the APK directly.</p>
-        </div>
 
         <div class="feature">
-            <h3>🔄 Latest Version</h3>
-            <p>Keep your app updated.</p>
+
+            <h3>
+                ⚡ Easy Download
+            </h3>
+
+            <p>
+                Download the APK directly.
+            </p>
+
+        </div>
+
+
+        <div class="feature">
+
+            <h3>
+                🔄 Latest Version
+            </h3>
+
+            <p>
+                Keep your app updated.
+            </p>
+
         </div>
 
     </section>
 
 </main>
 
+
 <footer>
     © 2026 GRS OpenApps. All rights reserved.
 </footer>
+
+
+<script>
+
+    /* ==========================================
+       APK DOWNLOAD LINK
+       ========================================== */
+
+    const APK_URL =
+        "https://github.com/starvivaproduction-creator/grs-openapp/releases/download/v1.0.0/GRS.OpenApps.apk";
+
+
+    /* ==========================================
+       ELEMENTS
+       ========================================== */
+
+    const downloadButton =
+        document.getElementById("downloadButton");
+
+    const downloadBox =
+        document.getElementById("downloadBox");
+
+    const progressBar =
+        document.getElementById("progressBar");
+
+    const progressPercent =
+        document.getElementById("progressPercent");
+
+    const downloadSize =
+        document.getElementById("downloadSize");
+
+    const downloadStatus =
+        document.getElementById("downloadStatus");
+
+    const downloadTitle =
+        document.getElementById("downloadTitle");
+
+
+    /* ==========================================
+       FORMAT MB
+       ========================================== */
+
+    function formatMB(bytes) {
+
+        const mb =
+            bytes / (1024 * 1024);
+
+        return mb.toFixed(2) + " MB";
+    }
+
+
+    /* ==========================================
+       DOWNLOAD APK
+       ========================================== */
+
+    async function downloadAPK() {
+
+        downloadButton.disabled = true;
+
+        downloadBox.style.display = "block";
+
+        progressBar.style.width = "0%";
+
+        progressPercent.textContent = "0%";
+
+        downloadSize.textContent =
+            "0 MB / 0 MB";
+
+        downloadTitle.textContent =
+            "Downloading GRS OpenApps...";
+
+        downloadStatus.textContent =
+            "Connecting to download server...";
+
+        downloadStatus.className =
+            "download-status";
+
+
+        try {
+
+            const response =
+                await fetch(APK_URL);
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    "Download failed: " +
+                    response.status
+                );
+
+            }
+
+
+            /*
+             * Get total file size.
+             */
+
+            const total =
+                Number(
+                    response.headers.get(
+                        "content-length"
+                    )
+                );
+
+
+            /*
+             * Make sure browser supports
+             * streaming.
+             */
+
+            if (!response.body) {
+
+                throw new Error(
+                    "Streaming is not supported."
+                );
+
+            }
+
+
+            const reader =
+                response.body.getReader();
+
+
+            const chunks = [];
+
+            let receivedLength = 0;
+
+
+            /*
+             * Read the APK piece by piece.
+             */
+
+            while (true) {
+
+                const {
+                    done,
+                    value
+                } = await reader.read();
+
+
+                if (done) {
+                    break;
+                }
+
+
+                chunks.push(value);
+
+                receivedLength +=
+                    value.length;
+
+
+                /*
+                 * Calculate progress.
+                 */
+
+                if (total > 0) {
+
+                    const percent =
+                        Math.round(
+                            (receivedLength / total) *
+                            100
+                        );
+
+
+                    progressBar.style.width =
+                        percent + "%";
+
+
+                    progressPercent.textContent =
+                        percent + "%";
+
+
+                    downloadSize.textContent =
+                        formatMB(receivedLength) +
+                        " / " +
+                        formatMB(total);
+
+
+                    downloadStatus.textContent =
+                        "Downloading...";
+                }
+
+                else {
+
+                    downloadSize.textContent =
+                        formatMB(receivedLength) +
+                        " downloaded";
+
+                    downloadStatus.textContent =
+                        "Downloading...";
+                }
+            }
+
+
+            /*
+             * Combine downloaded chunks.
+             */
+
+            const blob =
+                new Blob(chunks, {
+                    type: "application/vnd.android.package-archive"
+                });
+
+
+            /*
+             * Create temporary download link.
+             */
+
+            const blobURL =
+                URL.createObjectURL(blob);
+
+
+            const link =
+                document.createElement("a");
+
+
+            link.href = blobURL;
+
+            link.download =
+                "GRS.OpenApps.apk";
+
+            document.body.appendChild(link);
+
+            link.click();
+
+            link.remove();
+
+
+            /*
+             * Clean temporary URL.
+             */
+
+            setTimeout(() => {
+
+                URL.revokeObjectURL(blobURL);
+
+            }, 1000);
+
+
+            /*
+             * COMPLETE
+             */
+
+            progressBar.style.width =
+                "100%";
+
+            progressPercent.textContent =
+                "100%";
+
+
+            if (total > 0) {
+
+                downloadSize.textContent =
+                    formatMB(receivedLength) +
+                    " / " +
+                    formatMB(total);
+
+            }
+
+
+            downloadTitle.textContent =
+                "Download Complete";
+
+
+            downloadStatus.textContent =
+                "✅ Download Complete";
+
+
+            downloadStatus.className =
+                "download-status complete";
+
+
+            downloadButton.disabled =
+                false;
+
+
+        } catch (error) {
+
+            console.error(
+                "Download error:",
+                error
+            );
+
+
+            /*
+             * If the browser blocks the
+             * streamed download, use the
+             * normal GitHub download.
+             */
+
+            downloadTitle.textContent =
+                "Starting Download...";
+
+
+            downloadStatus.textContent =
+                "Your browser is opening the APK download.";
+
+
+            downloadStatus.className =
+                "download-status";
+
+
+            const fallback =
+                document.createElement("a");
+
+
+            fallback.href =
+                APK_URL;
+
+            fallback.download =
+                "GRS.OpenApps.apk";
+
+            fallback.target =
+                "_blank";
+
+
+            document.body.appendChild(
+                fallback
+            );
+
+            fallback.click();
+
+            fallback.remove();
+
+
+            downloadButton.disabled =
+                false;
+        }
+
+    }
+
+
+    /* ==========================================
+       BUTTON CLICK
+       ========================================== */
+
+    downloadButton.addEventListener(
+        "click",
+        downloadAPK
+    );
+
+</script>
 
 </body>
 </html>
